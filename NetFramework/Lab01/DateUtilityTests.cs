@@ -6,7 +6,7 @@ namespace Lab01
     public class DateUtilityTests
     {
         [Test]
-        public void TodayIsPayday()
+        public void Today_is_Payday()
         {
             Assert.True(true);
         }

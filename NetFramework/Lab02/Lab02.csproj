@@ -102,6 +102,7 @@
     <Compile Include="AccountBLTests.cs" />
     <Compile Include="Model\AccountDao.cs" />
     <Compile Include="Model\Cryptography.cs" />
+    <Compile Include="Model\ILog.cs" />
     <Compile Include="Model\LoggerUtility.cs" />
     <Compile Include="Model\LoginException.cs" />
     <Compile Include="Model\Member.cs" />
