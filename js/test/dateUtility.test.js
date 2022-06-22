@@ -15,12 +15,21 @@ describe("date utility", () => {
         todayShouldBePayday();
     })
 
+    it("today is not payday", () => {
+        givenToday(10);
+        todayShouldBeNotPayday();
+    })
+
+    function givenToday(date) {
+        fake_getToday.mockReturnValueOnce(new Date(2022, 6, date));
+    }
+
     function todayShouldBePayday() {
         expect(dateUtility.isPayday()).toBe(true);
     }
 
-    function givenToday(date) {
-        fake_getToday.mockReturnValueOnce(new Date(2022, 6, date));
+    function todayShouldBeNotPayday() {
+        expect(dateUtility.isPayday()).toBe(false);
     }
 
 });
