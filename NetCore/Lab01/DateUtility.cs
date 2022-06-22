@@ -11,11 +11,18 @@ public class DateUtility
     /// <returns></returns>
     public bool IsPayday()
     {
-        if (DateTime.Today.Day == 5)
+        var today = GivenToday();
+
+        if (today.Day == 5)
         {
             return true;
         }
 
         return false;
+    }
+
+    protected virtual DateTime GivenToday()
+    {
+        return DateTime.Today;
     }
 }
