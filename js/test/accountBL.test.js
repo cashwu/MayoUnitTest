@@ -24,6 +24,16 @@ describe("accountBL", () => {
         loginShouldBeValid("cash", "12345678");
     })
 
+    it("login is invalid", () => {
+        givenMember({
+            "password": "sha-1234"
+        });
+       
+        // 注意這裡也要改 !!
+        givenShaPassword("sha-5678");
+        loginShouldInvalid("cash", "wrong password");
+    })
+
     function givenMember(member) {
         fake_getMember.mockReturnValueOnce(member);
     }
@@ -35,5 +45,10 @@ describe("accountBL", () => {
     function loginShouldBeValid(account, password) {
         let isValid = accountBL.login(account, password);
         expect(isValid).toBe(true)
+    }
+
+    function loginShouldInvalid(account, password) {
+        let isValid = accountBL.login(account, password);
+        expect(isValid).toBe(false)
     }
 })
