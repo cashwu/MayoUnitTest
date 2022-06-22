@@ -22,6 +22,18 @@ public class DateUtilityTests
         TodayShouldBePayday();
     }
 
+    [Test]
+    public void Today_is_not_Payday()
+    {
+        GivenToday(6);
+        TodayShouldNotBePayday();
+    }
+
+    private void TodayShouldNotBePayday()
+    {
+        _dateUtility.IsPayday().Should().Be(false);
+    }
+
     private void TodayShouldBePayday()
     {
         _dateUtility.IsPayday().Should().Be(true);
