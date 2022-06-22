@@ -11,11 +11,17 @@ export class AccountBL {
         if (isValid) {
             return true;
         } else {
+            this.setLoginFailedCount(account);
 
             this.send(`${account} login failed`)
 
             return false;
         }
+    }
+
+    setLoginFailedCount(account) {
+        let accountDao = new AccountDao();
+        accountDao.setLoginFailedCount(account);
     }
 
     send(message) {
