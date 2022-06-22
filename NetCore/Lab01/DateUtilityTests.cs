@@ -7,12 +7,29 @@ namespace Lab01;
 [TestFixture]
 public class DateUtilityTests
 {
+    private FakeDateUtility _dateUtility;
+
+    [SetUp]
+    public void SetUp()
+    {
+        _dateUtility = new FakeDateUtility();
+    }
+
     [Test]
     public void Today_is_Payday()
     {
-        var dateUtility = new FakeDateUtility();
-        dateUtility.Today = new DateTime(2022, 6, 5);
-        dateUtility.IsPayday().Should().Be(true);
+        GivenToday(5);
+        TodayShouldBePayday();
+    }
+
+    private void TodayShouldBePayday()
+    {
+        _dateUtility.IsPayday().Should().Be(true);
+    }
+
+    private void GivenToday(int day)
+    {
+        _dateUtility.Today = new DateTime(2022, 6, day);
     }
 }
 
