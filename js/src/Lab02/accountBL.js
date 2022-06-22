@@ -11,12 +11,25 @@ export class AccountBL {
         if (isValid) {
             return true;
         } else {
+            
+            let loginFailedCount = this.getLoginFailedCount();
+            if (loginFailedCount >= 4)
+            {
+                throw new Error("cash login failed more than 5 times");
+            }
+            
             this.setLoginFailedCount(account);
 
             this.send(`${account} login failed`)
 
             return false;
         }
+    }
+
+    getLoginFailedCount() {
+        let accountDao = new AccountDao();
+        let loginFailedCount = accountDao.getLoginFailedCount();
+        return loginFailedCount;
     }
 
     setLoginFailedCount(account) {

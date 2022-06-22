@@ -7,6 +7,7 @@ describe("accountBL", () => {
     let fake_getShaPassword;
     let fake_send;
     let fake_setLoginFailedCount;
+    let fake_getLoginFailedCount;
 
     beforeEach(() => {
         accountBL = new AccountBL();
@@ -18,6 +19,8 @@ describe("accountBL", () => {
         accountBL.send = fake_send;
         fake_setLoginFailedCount = jest.fn();
         accountBL.setLoginFailedCount = fake_setLoginFailedCount;
+        fake_getLoginFailedCount = jest.fn();
+        accountBL.getLoginFailedCount = fake_getLoginFailedCount;
     })
 
     it("login is valid", () => {
@@ -50,6 +53,24 @@ describe("accountBL", () => {
         
         shouldSetFailedCount("cash");
     })
+
+    it("login failed 5 times should throw exception", () => {
+
+        givenMember({
+            "password": "sha-1234"
+        });
+
+        givenShaPassword("sha-5678");
+        
+        givenLoginFailedCount(4);
+        
+        let func = () => accountBL.login("cash", "wrong password");
+        expect(func).toThrow("cash login failed more than 5 times");
+    })
+
+    function givenLoginFailedCount(failedCount) {
+        fake_getLoginFailedCount.mockReturnValueOnce(failedCount);
+    }
 
     function shouldNotSetFailedCount() {
         expect(fake_setLoginFailedCount.mock.calls.length).toBe(0);
