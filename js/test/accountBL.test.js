@@ -25,6 +25,7 @@ describe("accountBL", () => {
         givenShaPassword("sha-1234");
 
         loginShouldBeValid("cash", "12345678");
+        shouldNotLog();
     })
 
     it("login is invalid", () => {
@@ -43,6 +44,10 @@ describe("accountBL", () => {
         // expect(fake_send.mock.calls[0][0]).toBe("cash login failed");
         shouldLog("cash", "login failed");
     })
+
+    function shouldNotLog() {
+        expect(fake_send.mock.calls.length).toBe(0);
+    }
 
     function shouldLog(account, status) {
         expect(fake_send.mock.calls[0][0]).toEqual(
