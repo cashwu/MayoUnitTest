@@ -19,6 +19,11 @@ describe("date utility", () => {
         givenToday(10);
         todayShouldBeNotPayday();
     })
+    
+    it("today is payday when 20", () => {
+        givenToday(20);
+        todayShouldBePayday();
+    })
 
     function givenToday(date) {
         fake_getToday.mockReturnValueOnce(new Date(2022, 6, date));
