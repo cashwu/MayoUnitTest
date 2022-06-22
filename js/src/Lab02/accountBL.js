@@ -1,7 +1,6 @@
 import {AccountDao} from "./accountDao";
 import {Cryptography} from "./cryptography";
 
-
 export class AccountBL {
     
     login(account, password) {
@@ -12,8 +11,15 @@ export class AccountBL {
         if (isValid) {
             return true;
         } else {
+
+            this.send(`${account} login failed`)
+
             return false;
         }
+    }
+
+    send(message) {
+       console.log(message);
     }
 
     getShaPassword(password) {
