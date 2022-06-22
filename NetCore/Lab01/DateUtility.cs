@@ -13,7 +13,7 @@ public class DateUtility
     {
         var today = GivenToday();
 
-        if (today.Day == 5)
+        if (today.Day == 5 || today.Day == 20)
         {
             return true;
         }
