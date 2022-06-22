@@ -5,10 +5,8 @@ import {Cryptography} from "./cryptography";
 export class AccountBL {
     
     login(account, password) {
-        
-        let accountDao = new AccountDao();
-        let member = accountDao.getMemberForLogin(account);
-        let encryptedPassword = new Cryptography().cashSha(password);
+        let member = this.getMember(account);
+        let encryptedPassword = this.getShaPassword(password);
         let isValid = member.password === encryptedPassword;
         
         if (isValid) {
@@ -16,5 +14,16 @@ export class AccountBL {
         } else {
             return false;
         }
+    }
+
+    getShaPassword(password) {
+        let encryptedPassword = new Cryptography().cashSha(password);
+        return encryptedPassword;
+    }
+
+    getMember(account) {
+        let accountDao = new AccountDao();
+        let member = accountDao.getMemberForLogin(account);
+        return member;
     }
 }
