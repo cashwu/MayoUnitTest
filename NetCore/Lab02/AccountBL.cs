@@ -33,6 +33,7 @@ public class AccountBL
         }
         else
         {
+            _accountDao.SetLoginFailedCount(account);
             _log.Send("cash login failed");
 
             return false;

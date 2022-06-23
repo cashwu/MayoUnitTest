@@ -34,6 +34,8 @@ public class AccountBLTests
         LoginShouldBeValid("cash", "12345678");
 
         ShouldNotLog();
+
+        ShouldNotSetFailedCount();
     }
 
     [Test]
@@ -50,13 +52,25 @@ public class AccountBLTests
     }
 
     [Test]
-    public void Login_invalid_should_log()
+    public void Login_invalid_should_log_and_set_failed_count()
     {
         GivenLoginInvalid();
 
         // _log.Received(1).Send("cash login failed");
         // _log.Received().Send(Arg.Any<string>());
         ShouldLog("cash", "login failed");
+
+        ShouldSetLoginFailedCount("cash");
+    }
+
+    private void ShouldNotSetFailedCount()
+    {
+        _accountDao.DidNotReceiveWithAnyArgs().SetLoginFailedCount(Arg.Any<string>());
+    }
+
+    private void ShouldSetLoginFailedCount(string account)
+    {
+        _accountDao.Received(1).SetLoginFailedCount(account);
     }
 
     private void ShouldNotLog()
