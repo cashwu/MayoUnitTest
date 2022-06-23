@@ -4,12 +4,25 @@ namespace Lab02;
 
 public class AccountBL
 {
+    private readonly IAccountDao _accountDao;
+    private readonly ICryptography _cryptography;
+
+    public AccountBL(IAccountDao accountDao, ICryptography cryptography)
+    {
+        _accountDao = accountDao;
+        _cryptography = cryptography;
+    }
+
+    public AccountBL()
+    {
+        _accountDao = new AccountDao();
+        _cryptography = new Cryptography();
+    }
+
     public bool Login(string account, string password)
     {
-        var accountDao = new AccountDao();
-
-        var member = accountDao.GetMemberForLogin(account);
-        var encryptedPassword = new Cryptography().CashSha(password);
+        var member = _accountDao.GetMemberForLogin(account);
+        var encryptedPassword = _cryptography.CashSha(password);
         var isValid = member.Password == encryptedPassword;
 
         if (isValid)

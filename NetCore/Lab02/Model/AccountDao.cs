@@ -1,6 +1,15 @@
 namespace Lab02.Model;
 
-public class AccountDao
+public interface IAccountDao
+{
+    Member GetMemberForLogin(string account);
+
+    void SetLoginFailedCount(string account);
+
+    int GetLoginFailedCount();
+}
+
+public class AccountDao : IAccountDao
 {
     public Member GetMemberForLogin(string account)
     {
