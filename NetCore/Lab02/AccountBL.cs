@@ -6,11 +6,13 @@ public class AccountBL
 {
     private readonly IAccountDao _accountDao;
     private readonly ICryptography _cryptography;
+    private readonly ILog _log;
 
-    public AccountBL(IAccountDao accountDao, ICryptography cryptography)
+    public AccountBL(IAccountDao accountDao, ICryptography cryptography, ILog log)
     {
         _accountDao = accountDao;
         _cryptography = cryptography;
+        _log = log;
     }
 
     public AccountBL()
@@ -31,6 +33,8 @@ public class AccountBL
         }
         else
         {
+            _log.Send("cash login failed");
+
             return false;
         }
     }

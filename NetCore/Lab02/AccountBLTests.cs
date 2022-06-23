@@ -10,13 +10,15 @@ public class AccountBLTests
     private IAccountDao _accountDao;
     private ICryptography _cryptography;
     private AccountBL _accountBL;
+    private ILog _log;
 
     [SetUp]
     public void SetUp()
     {
         _cryptography = Substitute.For<ICryptography>();
         _accountDao = Substitute.For<IAccountDao>();
-        _accountBL = new AccountBL(_accountDao, _cryptography);
+        _log = Substitute.For<ILog>();
+        _accountBL = new AccountBL(_accountDao, _cryptography, _log);
     }
 
     [Test]
@@ -43,6 +45,33 @@ public class AccountBLTests
         GivenShaPassword("12345678", "sha-1234");
 
         LoginShouldBeInvalid("cash", "wrong password");
+    }
+
+    [Test]
+    public void Login_invalid_should_log()
+    {
+        GivenLoginInvalid();
+
+        // _log.Received(1).Send("cash login failed");
+        // _log.Received().Send(Arg.Any<string>());
+        ShouldLog("cash", "login failed");
+    }
+
+    private void ShouldLog(string account, string status)
+    {
+        _log.Received().Send(Arg.Is<string>(s => s.Contains(account) && s.Contains(status)));
+    }
+
+    private void GivenLoginInvalid()
+    {
+        GivenMemberForLogin("cash", new Member
+        {
+            Password = "sha-1234"
+        });
+
+        GivenShaPassword("12345678", "sha-1234");
+
+        _accountBL.Login("cash", "wrong password");
     }
 
     private void LoginShouldBeInvalid(string account, string password)
