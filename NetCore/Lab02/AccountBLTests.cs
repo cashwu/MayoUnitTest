@@ -32,6 +32,8 @@ public class AccountBLTests
         GivenShaPassword("12345678", "sha-1234");
 
         LoginShouldBeValid("cash", "12345678");
+
+        ShouldNotLog();
     }
 
     [Test]
@@ -55,6 +57,11 @@ public class AccountBLTests
         // _log.Received(1).Send("cash login failed");
         // _log.Received().Send(Arg.Any<string>());
         ShouldLog("cash", "login failed");
+    }
+
+    private void ShouldNotLog()
+    {
+        _log.DidNotReceiveWithAnyArgs().Send(Arg.Any<string>());
     }
 
     private void ShouldLog(string account, string status)
