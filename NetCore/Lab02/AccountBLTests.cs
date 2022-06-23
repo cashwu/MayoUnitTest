@@ -63,6 +63,27 @@ public class AccountBLTests
         ShouldSetLoginFailedCount("cash");
     }
 
+    [Test]
+    public void Login_failed_5_times_should_throw_exception()
+    {
+        GivenMemberForLogin("cash", new Member
+        {
+            Password = "sha-1234"
+        });
+
+        GivenShaPassword("12345678", "sha-1234");
+
+        GivenLoginFailedCount(4);
+
+        var func = () => _accountBL.Login("cash", "wrong password");
+        func.Should().Throw<LoginException>().And.Message.Should().Contain("cash");
+    }
+
+    private void GivenLoginFailedCount(int times)
+    {
+        _accountDao.GetLoginFailedCount().Returns(times);
+    }
+
     private void ShouldNotSetFailedCount()
     {
         _accountDao.DidNotReceiveWithAnyArgs().SetLoginFailedCount(Arg.Any<string>());
