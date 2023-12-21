@@ -1,14 +1,12 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace Lab01
 {
-    [TestFixture]
     public class DateUtilityTests
     {
-        [Test]
+        [Fact]
         public void Today_is_Payday()
         {
-            Assert.True(true);
         }
     }
 }
