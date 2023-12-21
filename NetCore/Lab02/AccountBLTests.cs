@@ -1,10 +1,10 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace Lab02;
 
 public class AccountBLTests
 {
-    [Test]
+    [Fact]
     public void Login_is_valid()
     {
         // test  
