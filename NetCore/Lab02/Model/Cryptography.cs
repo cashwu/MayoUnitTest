@@ -7,7 +7,7 @@ public interface ICryptography
 
 public class Cryptography : ICryptography
 {
-    public string CashSha(string password)
+    public virtual string CashSha(string password)
     {
         throw new System.NotImplementedException();
     }

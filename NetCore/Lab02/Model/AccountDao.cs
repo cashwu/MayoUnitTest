@@ -11,7 +11,7 @@ public interface IAccountDao
 
 public class AccountDao : IAccountDao
 {
-    public Member GetMemberForLogin(string account)
+    public virtual Member GetMemberForLogin(string account)
     {
         throw new System.NotImplementedException();
     }
