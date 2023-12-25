@@ -33,6 +33,11 @@ public class AccountBL
         }
         else
         {
+            if (_accountDao.GetLoginFailedCount() >= 4)
+            {
+                throw new LoginException($"{account} login failed more than 5 times");
+            }
+
             _accountDao.SetLoginFailedCount(account);
             _log.Send($"{account} login failed");
 
