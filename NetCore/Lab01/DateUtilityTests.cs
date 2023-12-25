@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions;
 using Xunit;
 
@@ -9,7 +10,18 @@ public class DateUtilityTests
     public void Today_is_Payday()
     {
         // test
-        var dateUtility = new DateUtility();
+        var dateUtility = new FakeDateUtility();
+        dateUtility.Today = new DateTime(2023, 12, 5);
         dateUtility.IsPayday().Should().BeTrue();
+    }
+}
+
+public class FakeDateUtility : DateUtility
+{
+    public DateTime Today { get; set; }
+
+    protected override DateTime GetToday()
+    {
+        return Today;
     }
 }
