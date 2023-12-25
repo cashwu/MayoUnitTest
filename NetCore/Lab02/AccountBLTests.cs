@@ -54,7 +54,16 @@ public class AccountBLTests
         // test  
         GivenLoginInvalid();
 
-        _log.Received(1).Send("cash login failed");
+        // _log.Received().Send(Arg.Any<string>());
+        // _log.Received(1).Send("cash login failed");
+
+        ShouldLog("cash", "login failed");
+    }
+
+    private void ShouldLog(string account, string loginStatus)
+    {
+        _log.Received(1)
+            .Send(Arg.Is<string>(s => s.Contains(account) && s.Contains(loginStatus)));
     }
 
     private void GivenLoginInvalid()
