@@ -6,6 +6,7 @@ public class AccountBL
 {
     private readonly IAccountDao _accountDao;
     private readonly ICryptography _cryptography;
+    private readonly ILog _log;
 
     public AccountBL()
     {
@@ -13,10 +14,11 @@ public class AccountBL
         _cryptography = new Cryptography();
     }
 
-    public AccountBL(IAccountDao accountDao, ICryptography cryptography)
+    public AccountBL(IAccountDao accountDao, ICryptography cryptography, ILog log)
     {
         _accountDao = accountDao;
         _cryptography = cryptography;
+        _log = log;
     }
 
     public bool Login(string account, string password)
@@ -31,6 +33,8 @@ public class AccountBL
         }
         else
         {
+            _log.Send($"{account} login failed");
+
             return false;
         }
     }

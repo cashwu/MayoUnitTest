@@ -10,12 +10,14 @@ public class AccountBLTests
     private readonly IAccountDao _accountDao;
     private readonly ICryptography _cryptography;
     private readonly AccountBL _accountBL;
+    private readonly ILog _log;
 
     public AccountBLTests()
     {
         _accountDao = Substitute.For<IAccountDao>();
         _cryptography = Substitute.For<ICryptography>();
-        _accountBL = new AccountBL(_accountDao, _cryptography);
+        _log = Substitute.For<ILog>();
+        _accountBL = new AccountBL(_accountDao, _cryptography, _log);
     }
 
     [Fact]
