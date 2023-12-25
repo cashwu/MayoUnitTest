@@ -34,6 +34,7 @@ public class AccountBLTests
         LoginShouldBeValid("cash", "cash123456");
 
         ShouldNotLog();
+        ShouldNotSetFailedCount();
     }
 
     [Fact]
@@ -69,6 +70,11 @@ public class AccountBLTests
         GivenLoginInvalid();
 
         ShouldSetLoginFailedCount("cash");
+    }
+
+    private void ShouldNotSetFailedCount()
+    {
+        _accountDao.DidNotReceiveWithAnyArgs().SetLoginFailedCount(Arg.Any<string>());
     }
 
     private void ShouldSetLoginFailedCount(string account)
