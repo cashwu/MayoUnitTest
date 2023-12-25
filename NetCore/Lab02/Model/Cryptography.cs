@@ -1,6 +1,11 @@
 namespace Lab02.Model;
 
-public class Cryptography
+public interface ICryptography
+{
+    string CashSha(string password);
+}
+
+public class Cryptography : ICryptography
 {
     public string CashSha(string password)
     {
