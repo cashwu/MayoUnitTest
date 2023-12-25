@@ -32,6 +32,26 @@ public class AccountBLTests
         LoginShouldBeValid("cash", "cash123456");
     }
 
+    [Fact]
+    public void Login_is_invalid()
+    {
+        // test  
+        GivenMemberForLogin("cash", new Member
+        {
+            Password = "sha-1234"
+        });
+
+        GivenShaPassword("cash123456", "sha-1234");
+
+        LoginShouldBeInvalid("cash", "wrong password");
+    }
+
+    private void LoginShouldBeInvalid(string account, string password)
+    {
+        var isValid = _accountBL.Login(account, password);
+        isValid.Should().BeFalse();
+    }
+
     private void LoginShouldBeValid(string account, string password)
     {
         var isValid = _accountBL.Login(account, password);
